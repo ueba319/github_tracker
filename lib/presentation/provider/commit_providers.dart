@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:github_traker_app/constants/app_constants.dart';
 import 'package:github_traker_app/data/data_source/github_api_data_source.dart';
 import 'package:github_traker_app/data/repository/github_repository_impl.dart';
 import 'package:github_traker_app/domain/usecase/get_user_commit_activity_usecase.dart';
@@ -23,16 +22,13 @@ final githubRepositoryProvider = Provider<GithubRepositoryImpl>((ref) {
 // GetUserCommitActivityUseCase を提供するプロバイダ
 final getUserCommitActivityUseCaseProvider = Provider((ref) {
   final repository = ref.watch(githubRepositoryProvider);
-  return GetUserCommitActivityUsecase(repository);
+  return GetUserCommitActivityUseCase(repository);
 });
 
 // ユーザー名と日数に基づいてコミットデータを取得する FutureProvider
-// このプロバイダは、UI からユーザー名を受け取り、非同期でデータを取得します。
 final userCommitActivityProvider =
     FutureProvider.family<Map<DateTime, int>, String>((ref, username) async {
   final getUserCommitActivity = ref.watch(getUserCommitActivityUseCaseProvider);
-  return getUserCommitActivity.call(
-    username,
-    days: AppConstants.commitCalendarDays,
-  );
+  // days 引数を省略（または null を渡す）ことで、今月の日数が使われるようになる
+  return getUserCommitActivity.call(username);
 });

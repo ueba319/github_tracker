@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
       ),
       home: const CommitCalendarScreen(
-        username: AppConstants.gitHubUserName, // AppConstantsからユーザー名を取得
+        username: AppConstants.githubUsername, // AppConstantsからユーザー名を取得
       ),
     );
   }
