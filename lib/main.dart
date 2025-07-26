@@ -2,39 +2,34 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:github_traker_app/constants/app_constants.dart';
-import 'package:github_traker_app/presentation/screen/commit_calendar_screen.dart';
+import 'package:github_traker_app/ui/routes/app_router.dart';
+import 'package:github_traker_app/ui/themes/app_theme.dart';
 
 // 環境変数からアクセストークンを取得するヘルパー関数
-// ビルド時に --dart-define=GITHUB_ACCESS_TOKEN=YOUR_TOKEN のように渡される値を参照します。
 String? get githubAccessToken =>
     const String.fromEnvironment('GITHUB_ACCESS_TOKEN');
 
 void main() {
-  // アプリケーション起動時にアクセストークンが読み込まれているか確認（デバッグ用）
-  // print('GitHub Access Token loaded: $githubAccessToken');
-
   runApp(
-    // Riverpod を使用するために ProviderScope でアプリをラップします。
     const ProviderScope(
       child: MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    // GoRouter インスタンスをRiverpodから取得
+    final goRouter = ref.watch(goRouterProvider);
+
+    return MaterialApp.router(
       title: 'GitHub Commit Calendar',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      home: const CommitCalendarScreen(
-        username: AppConstants.githubUsername, // AppConstantsからユーザー名を取得
-      ),
+      theme: AppTheme.darkTheme,
+      routerConfig: goRouter,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
