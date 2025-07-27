@@ -19,7 +19,7 @@ class AppTheme {
       titleLarge: TextStyle(color: Colors.black87),
       // 必要に応じて他のテキストスタイルも定義
     ),
-    cardTheme: CardThemeData(
+    cardTheme: CardTheme(
       // ★ここを CardThemeData に修正！★
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -55,7 +55,7 @@ class AppTheme {
       titleLarge: TextStyle(color: Colors.white),
       // 必要に応じて他のテキストスタイルも定義
     ),
-    cardTheme: CardThemeData(
+    cardTheme: CardTheme(
       // CardThemeDataを使用
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
